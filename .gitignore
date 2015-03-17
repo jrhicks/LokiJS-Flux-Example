@@ -1,0 +1,11 @@
+/.bundle
+/db/*.sqlite3
+/db/*.sqlite3-journal
+/log/*
+!/log/.keep
+/tmp
+node_modules/
+/.idea/*
+.idea
+.idea/
+app/assets/javascripts/rails.bundle.js

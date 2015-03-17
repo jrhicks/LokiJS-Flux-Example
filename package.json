@@ -1,0 +1,19 @@
+{
+  "devDependencies": {
+    "babel-core": "^4.7.12",
+    "babel-loader": "^4.1.0",
+    "babel-runtime": "^4.7.12",
+    "webpack": "^1.5.3"
+  },
+  "dependencies": {
+    "alt": "^0.13.1",
+    "babel-core": "^4.7.12",
+    "babel-runtime": "^4.7.12",
+    "deep-equal": "^1.0.0",
+    "jsx-loader": "^0.12.2",
+    "object-assign": "^2.0.0",
+    "react": "^0.12.2",
+    "react-dnd": "^0.8.1",
+    "superagent": "^0.21.0"
+  }
+}
