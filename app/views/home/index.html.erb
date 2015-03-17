@@ -1,0 +1,14 @@
+<div id='app'>
+</div>
+<script>
+  var render = function() {
+    React.render(
+      React.createElement(App, {}),
+      document.getElementById('app')
+    )
+  }
+
+  // Wait for DOM to load before React init render
+  document.addEventListener('DOMContentLoaded',render);
+
+</script>

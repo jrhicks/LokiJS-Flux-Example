@@ -1,31 +1,28 @@
 "use strict";
 import React from 'react';
-import OPStore from '../stores/OPStore';
-import OPActions from '../actions/OPActions'
+import OPStore from '../ops/OPStore';
+import OPActions from '../ops/OPActions'
 
 var App = React.createClass({
-  displayName: 'FeatureSetEditMap',
+  displayName: 'Application',
 
   getInitialState() {
-    return {};
-  },
-
-  propTypes: {
-    featureSetId: React.PropTypes.number.isRequired
+    return {partitions: {}};
   },
 
   componentWillMount() {
     OPStore.listen(this._onChange);
+    OPActions.ensurePartition({key: 'active_projects', entity: 'project', filter: {status: 'active'}});
   },
 
-  _onChange(store) {
-    console.log("Store Changed");
+  _onChange() {
+    this.setState({partitions: OPStore.getState() });
   },
 
   render() {
     return (
       <div>
-        <h2>Hello World</h2>
+        <pre>{JSON.stringify(this.state.partitions, null, 2)}</pre>
       </div>
     );
   }

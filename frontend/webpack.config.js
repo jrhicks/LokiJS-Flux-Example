@@ -17,7 +17,7 @@ module.exports = {
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
-        loader: 'babel-loader?optional&optional=runtime'
+        loader: 'babel-loader?experimental&optional=runtime'
       }
     ]
   },
