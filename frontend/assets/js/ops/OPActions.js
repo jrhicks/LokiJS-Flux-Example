@@ -6,8 +6,12 @@ class OPActions {
     this.dispatch(partition);
   }
 
-  loadServerChange(partition, record) {
-    this.dispatch({partition: partition, record:record})
+  loadServerChanges(partition, records) {
+    this.dispatch({partition: partition, records:records})
+  }
+
+  syncAll() {
+    window.opSyncAll();
   }
 }
 

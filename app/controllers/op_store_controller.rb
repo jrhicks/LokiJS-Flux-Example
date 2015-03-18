@@ -2,17 +2,17 @@ require 'json'
 
 class OpStoreController < ApplicationController
   def getChanges()
-    partition = JSON.parse(params[:partition]).inject({}){|memo,(k,v)| memo[k.to_sym] = v; memo}
-    entity = partition[:entity]
-    filter = partition[:filter]
-    cursor = partition[:cursor]
+    scope = JSON.parse(params[:scope]).inject({}){|memo,(k,v)| memo[k.to_sym] = v; memo}
+    entity = scope[:entity]
+    filter = scope[:filter].inject({}){|memo,(k,v)| memo[k.to_sym] = v; memo}
+
     m = entity.camelize.constantize
-    if false && partition[:cursor]
-      ci = partition[:cursor][:id]
-      cu = partition[:cursor][:updated_at]
-      data = m.where(filter).where(["updated_at > ? or (updated_at=? and id>?)", cu, cu, ci]).order("updated_at, id asc")
+    if scope[:lastUpdatedCursor] && scope[:lastIdCursor]
+      ci = scope[:lastIdCursor]
+      cu = DateTime.parse(scope[:lastUpdatedCursor])
+      data = m.where(filter).where(["updated_at > ? or (updated_at=? and id>?)", cu, cu, ci]).order("updated_at asc, id asc").limit(10)
     else
-      data = m.where(filter).order("updated_at, id asc")
+      data = m.where(filter).order("updated_at asc, id asc").limit(10)
     end
     render text: data.to_json
   end

@@ -1,7 +1,8 @@
 import React from 'react';
-import OPStore from '../ops/OPStore';
-import OPActions from '../ops/OPActions';
+import OPStore from './OPStore';
+import OPActions from './OPActions';
 import agent from 'superagent-promise';
+import objectValues from 'object-values';
 
 function timeOut(t) {
   var p = new Promise(function(resolve, reject) {
@@ -10,16 +11,26 @@ function timeOut(t) {
   return p;
 }
 
-async function opSync() {
-  let partition = {key: 'active_projects', entity: 'note', filter: {project_id: 501}, cursor: {id: null, updated_at: null}};
-  let pJson = encodeURIComponent(JSON.stringify(partition));
-  let response = await agent.get('/op_store/getChanges?partition=' + pJson).end();
-  let data = JSON.parse(response.text);
-  for (var d of data) {
-    OPActions.loadServerChange(partition, d);
-    await timeOut(0);
+function opSyncAll() {
+  let partitions =  OPStore.allPartitions();
+  for (var p of partitions) {
+    opSyncPartition(p);
   }
-
 }
 
-module.exports = opSync;
+async function opSyncPartition(partition) {
+  let scope = {
+                entity: partition.entity,
+                filter: partition.filter,
+                lastIdCursor: partition.lastIdCursor,
+                lastUpdatedCursor: partition.lastUpdatedCursor
+              };
+  console.log(scope);
+  let scopeJson = encodeURIComponent(JSON.stringify(scope));
+  let url = `/op_store/getChanges?scope=${scopeJson}`;
+  let response = await agent.get(url).end();
+  let data = JSON.parse(response.text);
+  OPActions.loadServerChanges(partition, data);
+}
+
+module.exports = {opSyncPartition, opSyncAll}
