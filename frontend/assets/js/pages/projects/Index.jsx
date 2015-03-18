@@ -1,10 +1,10 @@
 "use strict";
 import React from 'react';
-import OPStore from '../ops/OPStore';
-import OPActions from '../ops/OPActions'
+import OPStore from '../../ops/OPStore';
+import {Link} from 'react-router';
 
 var App = React.createClass({
-  displayName: 'Application',
+  displayName: 'ProjectIndex',
 
   getInitialState() {
     return {partitions: {}};
@@ -12,20 +12,19 @@ var App = React.createClass({
 
   componentWillMount() {
     OPStore.listen(this._onChange);
-    OPActions.ensurePartition({key: 'active_projects', entity: 'project', filter: {status: 'Active'}});
+    OPActions.ensurePartition({key: 'projects', entity: 'project', filter: {}});
+  },
+
+  componentWillUnmount() {
+    OPStore.unlisten(this._onChange);
   },
 
   _onChange() {
     this.setState(OPStore.getState());
   },
 
-  handleSync() {
-    OPActions.syncAll();
-  },
-
-
   projectTable() {
-    let records = OPStore.allRecords('active_projects');
+    let records = OPStore.allRecords('projects');
     if (records.length > 0) {
       return <table>
               <tr>
@@ -36,7 +35,11 @@ var App = React.createClass({
               </tr>
               {records.map( (record) =>
                 <tr key={record.data.id}>
-                  <td>{record.data.name}</td>
+                  <td>
+                    <Link to="project" params={{projectId: record.data.id}}>
+                      {record.data.name}
+                    </Link>
+                  </td>
                   <td>{record.data.city}</td>
                   <td>{record.data.state}</td>
                   <td>{record.data.status}</td>
@@ -48,17 +51,11 @@ var App = React.createClass({
   },
 
   render() {
-    var floatLeft = {width: '50%',float: 'left'};
     return (
       <div>
-        <div style={floatLeft}>
+        <div>
           <h2>Projects</h2>
-          <button onClick={this.handleSync}>SYNC</button>
-          <hr/>
           {this.projectTable()}
-        </div>
-        <div style={floatLeft}>
-          <pre>{JSON.stringify(this.state.partitions, null, 2)}</pre>
         </div>
       </div>
     );
@@ -67,3 +64,7 @@ var App = React.createClass({
 });
 
 module.exports = App;
+
+//        <div style={floatLeft}>
+//          <pre>{JSON.stringify(this.state.partitions, null, 2)}</pre>
+//        </div>

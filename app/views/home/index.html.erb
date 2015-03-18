@@ -1,11 +1,8 @@
-<div id='app'>
-</div>
 <script>
   var render = function() {
-    React.render(
-      React.createElement(App, {}),
-      document.getElementById('app')
-    )
+    router.run( function (Handler, state) {
+          React.render(React.createElement(Handler, React.__spread({},  state)), document.body);
+        });
   }
 
   // Wait for DOM to load before React init render

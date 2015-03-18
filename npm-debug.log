@@ -1,88 +1,81 @@
 0 info it worked if it ends with ok
-1 verbose cli [ '/usr/bin/node',
-1 verbose cli   '/usr/bin/npm',
-1 verbose cli   'install',
-1 verbose cli   'superagent-promises' ]
+1 verbose cli [ '/usr/bin/node', '/usr/bin/npm', 'install' ]
 2 info using npm@1.4.28
 3 info using node@v0.10.33
 4 verbose node symlink /usr/bin/node
 5 warn package.json @ No repository field.
 6 verbose readDependencies using package.json deps
-7 verbose cache add [ 'superagent-promises', null ]
-8 verbose cache add name=undefined spec="superagent-promises" args=["superagent-promises",null]
-9 verbose parsed url { protocol: null,
-9 verbose parsed url   slashes: null,
-9 verbose parsed url   auth: null,
-9 verbose parsed url   host: null,
-9 verbose parsed url   port: null,
-9 verbose parsed url   hostname: null,
-9 verbose parsed url   hash: null,
-9 verbose parsed url   search: null,
-9 verbose parsed url   query: null,
-9 verbose parsed url   pathname: 'superagent-promises',
-9 verbose parsed url   path: 'superagent-promises',
-9 verbose parsed url   href: 'superagent-promises' }
-10 silly lockFile 5d5b5cbe-superagent-promises superagent-promises
-11 verbose lock superagent-promises /home/vagrant/.npm/5d5b5cbe-superagent-promises.lock
-12 silly lockFile 5d5b5cbe-superagent-promises superagent-promises
-13 silly lockFile 5d5b5cbe-superagent-promises superagent-promises
-14 verbose addNamed [ 'superagent-promises', '' ]
-15 verbose addNamed [ null, '*' ]
-16 silly lockFile f077b2f7-superagent-promises superagent-promises@
-17 verbose lock superagent-promises@ /home/vagrant/.npm/f077b2f7-superagent-promises.lock
-18 silly addNameRange { name: 'superagent-promises', range: '*', hasData: false }
-19 verbose request where is /superagent-promises
-20 verbose request registry https://registry.npmjs.org/
-21 verbose request id 6cf89ef9de738855
-22 verbose url raw /superagent-promises
-23 verbose url resolving [ 'https://registry.npmjs.org/', './superagent-promises' ]
-24 verbose url resolved https://registry.npmjs.org/superagent-promises
-25 verbose request where is https://registry.npmjs.org/superagent-promises
-26 info trying registry request attempt 1 at 15:27:25
-27 http GET https://registry.npmjs.org/superagent-promises
-28 http 404 https://registry.npmjs.org/superagent-promises
-29 verbose headers { date: 'Tue, 17 Mar 2015 20:27:17 GMT',
-29 verbose headers   server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
-29 verbose headers   'content-type': 'application/json',
-29 verbose headers   'cache-control': 'max-age=0',
-29 verbose headers   'content-length': '51',
-29 verbose headers   'accept-ranges': 'bytes',
-29 verbose headers   via: '1.1 varnish',
-29 verbose headers   age: '0',
-29 verbose headers   'x-served-by': 'cache-dfw1821-DFW',
-29 verbose headers   'x-cache': 'MISS',
-29 verbose headers   'x-cache-hits': '0',
-29 verbose headers   'x-timer': 'S1426624037.783275,VS0,VE49',
-29 verbose headers   'keep-alive': 'timeout=10, max=50',
-29 verbose headers   connection: 'Keep-Alive' }
-30 silly registry.get cb [ 404,
-30 silly registry.get   { date: 'Tue, 17 Mar 2015 20:27:17 GMT',
-30 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
-30 silly registry.get     'content-type': 'application/json',
-30 silly registry.get     'cache-control': 'max-age=0',
-30 silly registry.get     'content-length': '51',
-30 silly registry.get     'accept-ranges': 'bytes',
-30 silly registry.get     via: '1.1 varnish',
-30 silly registry.get     age: '0',
-30 silly registry.get     'x-served-by': 'cache-dfw1821-DFW',
-30 silly registry.get     'x-cache': 'MISS',
-30 silly registry.get     'x-cache-hits': '0',
-30 silly registry.get     'x-timer': 'S1426624037.783275,VS0,VE49',
-30 silly registry.get     'keep-alive': 'timeout=10, max=50',
-30 silly registry.get     connection: 'Keep-Alive' } ]
-31 silly lockFile f077b2f7-superagent-promises superagent-promises@
-32 silly lockFile f077b2f7-superagent-promises superagent-promises@
-33 error 404 404 Not Found: superagent-promises
-33 error 404
-33 error 404 'superagent-promises' is not in the npm registry.
-33 error 404 You should bug the author to publish it
-33 error 404
-33 error 404 Note that you can also install from a
-33 error 404 tarball, folder, or http url, or git url.
-34 error System Linux 3.2.0-58-generic
-35 error command "/usr/bin/node" "/usr/bin/npm" "install" "superagent-promises"
-36 error cwd /home/vagrant/RubymineProjects/ops_rails
-37 error node -v v0.10.33
-38 error npm -v 1.4.28
-39 error code E404
-40 verbose exit [ 1, true ]
+7 verbose install where, deps [ '/home/vagrant/RubymineProjects/ops_rails',
+7 verbose install   [ 'alt',
+7 verbose install     'babel-core',
+7 verbose install     'jsx-loader',
+7 verbose install     'object-assign',
+7 verbose install     'object-values',
+7 verbose install     'react',
+7 verbose install     'superagent',
+7 verbose install     'react-router',
+7 verbose install     'superagent-promise',
+7 verbose install     'babel-loader',
+7 verbose install     'babel-runtime',
+7 verbose install     'webpack' ] ]
+8 info preinstall @
+9 verbose readDependencies using package.json deps
+10 verbose already installed skipping babel-core@^4.7.12 /home/vagrant/RubymineProjects/ops_rails
+11 verbose already installed skipping jsx-loader@^0.12.2 /home/vagrant/RubymineProjects/ops_rails
+12 verbose already installed skipping object-assign@^2.0.0 /home/vagrant/RubymineProjects/ops_rails
+13 verbose already installed skipping object-values@^1.0.0 /home/vagrant/RubymineProjects/ops_rails
+14 verbose already installed skipping react@^0.12.2 /home/vagrant/RubymineProjects/ops_rails
+15 verbose already installed skipping superagent@^0.21.0 /home/vagrant/RubymineProjects/ops_rails
+16 verbose already installed skipping react-router@^0.11.6 /home/vagrant/RubymineProjects/ops_rails
+17 verbose already installed skipping superagent-promise@^0.2.0 /home/vagrant/RubymineProjects/ops_rails
+18 verbose already installed skipping babel-loader@^4.1.0 /home/vagrant/RubymineProjects/ops_rails
+19 verbose already installed skipping babel-runtime@^4.7.12 /home/vagrant/RubymineProjects/ops_rails
+20 verbose already installed skipping webpack@^1.5.3 /home/vagrant/RubymineProjects/ops_rails
+21 verbose already installed skipping alt@^0.13.2 /home/vagrant/RubymineProjects/ops_rails
+22 silly resolved []
+23 info build /home/vagrant/RubymineProjects/ops_rails
+24 verbose linkStuff [ false, false, false, '/home/vagrant/RubymineProjects' ]
+25 info linkStuff @
+26 verbose linkBins @
+27 verbose linkMans @
+28 verbose rebuildBundles @
+29 verbose rebuildBundles [ '.bin',
+29 verbose rebuildBundles   'alt',
+29 verbose rebuildBundles   'babel-core',
+29 verbose rebuildBundles   'babel-loader',
+29 verbose rebuildBundles   'babel-runtime',
+29 verbose rebuildBundles   'jsx-loader',
+29 verbose rebuildBundles   'object-assign',
+29 verbose rebuildBundles   'object-values',
+29 verbose rebuildBundles   'promise',
+29 verbose rebuildBundles   'react',
+29 verbose rebuildBundles   'react-router',
+29 verbose rebuildBundles   'superagent',
+29 verbose rebuildBundles   'superagent-promise',
+29 verbose rebuildBundles   'webpack' ]
+30 verbose rebuild bundle /home/vagrant/RubymineProjects/ops_rails/node_modules/promise
+31 info build /home/vagrant/RubymineProjects/ops_rails/node_modules/promise
+32 info preinstall promise@6.1.0
+33 verbose linkStuff [ false,
+33 verbose linkStuff   false,
+33 verbose linkStuff   false,
+33 verbose linkStuff   '/home/vagrant/RubymineProjects/ops_rails/node_modules' ]
+34 info linkStuff promise@6.1.0
+35 verbose linkBins promise@6.1.0
+36 verbose linkMans promise@6.1.0
+37 verbose rebuildBundles promise@6.1.0
+38 verbose rebuildBundles [ 'asap' ]
+39 info install promise@6.1.0
+40 info postinstall promise@6.1.0
+41 info install @
+42 info postinstall @
+43 info prepublish @
+44 error peerinvalid The package react does not satisfy its siblings' peerDependencies requirements!
+44 error peerinvalid Peer react-router@0.11.6 wants react@^0.13.0-beta.1
+45 error System Linux 3.2.0-58-generic
+46 error command "/usr/bin/node" "/usr/bin/npm" "install"
+47 error cwd /home/vagrant/RubymineProjects/ops_rails
+48 error node -v v0.10.33
+49 error npm -v 1.4.28
+50 error code EPEERINVALID
+51 verbose exit [ 1, true ]
