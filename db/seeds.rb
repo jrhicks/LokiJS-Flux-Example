@@ -6,7 +6,7 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-100.times do
+1.times do
   p = Project.new
   p.name = Faker::App.name + ' - ' + Faker::Company.name
   print p.name
@@ -14,7 +14,9 @@
   p.state = Faker::Address.state_abbr
   p.status = ['Active', 'Completed', 'Cancelled'].sample
   p.save!
-  rand(100).times do
+  contact_ids = []
+  print "Adding Contacts"
+  1000.times do
     c = p.contacts.new
     c.name = Faker::Name.name
     c.email = Faker::Internet.email
@@ -22,9 +24,15 @@
     c.company = Faker::Company.name
     c.title = Faker::Name.title
     c.save!
-    rand(30).times do
-      n = c.notes.new
-      n.project = p
+    contact_ids << c.id
+  end
+  print "Adding Notes"
+  x = 0
+  10.times do
+    print "Adding batch of 1000 notes."
+    1000.times do
+      n = p.notes.new
+      n.contact_id = contact_ids.sample
       n.message = Faker::Lorem.sentence
       n.save!
     end

@@ -5,7 +5,8 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
 
-  get '/op_store/getChanges', to: 'op_store#getChanges'
+  get '/offline/download_updated', to: 'offline#download_updated'
+  get '/offline/count_updated', to: 'offline#count_updated'
   get '/', to: 'home#index'
 
   # Example of regular route:
