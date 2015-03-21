@@ -1,8 +1,6 @@
 import React from 'react';
 import {Link, RouteHandler} from 'react-router';
-import OfflineActions from '../../offline/OfflineActions';
-import OfflineStore from '../../offline/OfflineStore';
-import db from '../../offline/LokiDB';
+import db from '../../db/ReplicatedDB';
 import helper from '../../helper';
 
 var AppLayout = React.createClass({
@@ -14,19 +12,15 @@ var AppLayout = React.createClass({
 
   // TODO FIX
   componentDidMount() {
-    OfflineStore.listen(this._onChange);
+    ReplicatedDBStore.listen(this._onChange);
   },
 
   componentWillUnmount() {
-    OfflineStore.unlisten(this._onChange);
+    ReplicatedDBStore.unlisten(this._onChange);
   },
 
   _onChange() {
     this.setState({subscriptions: db.subscription.data});
-  },
-
-  handleSync() {
-    OfflineActions.downloadUpdates();
   },
 
   subscriptionsTable() {
@@ -55,7 +49,8 @@ var AppLayout = React.createClass({
     return (
       <div>
         <h1>Example-Flux-App-With-Offline-Stores</h1>
-        <button onClick={this.handleSync}>SYNC</button>
+        <button onClick={db.syncStart}>SYNC Start</button>
+        <button onClick={db.syncStop}>SYNC Stop</button>
         <hr />
         {this.subscriptionsTable()}
         <hr />

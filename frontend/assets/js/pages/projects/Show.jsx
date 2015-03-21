@@ -1,8 +1,6 @@
 import React from 'react';
 import Router from 'react-router';
-import OfflineStore from '../../offline/OfflineStore';
-import OfflineActions from '../../offline/OfflineActions'
-import db from '../../offline/LokiDB';
+import db from '../../db/ReplicatedDB';
 import helper from '../../helper';
 
 var {Link} = Router;
@@ -18,13 +16,13 @@ var ProjectShow = React.createClass({
 
   componentWillMount() {
     let projectId = parseInt(this.getParams().projectId);
-    OfflineStore.listen(this._onChange);
-    OfflineActions.subscribe('note', {project_id: projectId} );
-    OfflineActions.subscribe('contact', {project_id: projectId} );
+    ReplicatedDBStore.listen(this._onChange);
+    ReplicatedDB.addSubscription('note', {project_id: projectId} );
+    ReplicatedDB.addSubscription('contact', {project_id: projectId} );
   },
 
   componentWillUnmount() {
-    OfflineStore.unlisten(this._onChange);
+    ReplicatedDBStore.unlisten(this._onChange);
   },
 
   _onChange() {

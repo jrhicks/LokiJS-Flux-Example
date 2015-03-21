@@ -1,9 +1,9 @@
 import React from 'react';
 import {Link} from 'react-router';
-import db from '../../offline/LokiDB';
+import db from '../../db/ReplicatedDB';
 import helper from '../../helper';
 
-import OfflineStore from '../../offline/OfflineStore';
+import ReplicatedDBStore from '../../db/ReplicatedDBStore';
 
 var App = React.createClass({
   displayName: 'ProjectIndex',
@@ -13,12 +13,12 @@ var App = React.createClass({
   },
 
   componentDidMount() {
-    OfflineStore.listen(this._onChange);
-    OfflineActions.subscribe('project', {});
+    ReplicatedDBStore.listen(this._onChange);
+    ReplicatedDB.addSubscription('project', {});
   },
 
   componentWillUnmount() {
-    OfflineStore.unlisten(this._onChange);
+    ReplicatedDBStore.unlisten(this._onChange);
   },
 
   _onChange() {
@@ -59,7 +59,3 @@ var App = React.createClass({
 });
 
 module.exports = App;
-
-//        <div style={floatLeft}>
-//          <pre>{JSON.stringify(this.state.collections, null, 2)}</pre>
-//        </div>
