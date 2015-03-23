@@ -1,9 +1,11 @@
 import alt from '../alt';
 
 class ReplicatedDBActions {
-  reportChanges(changes) {
-    this.dispatch(changes);
+
+  update() {
+    this.dispatch();
   }
+
 }
 
 module.exports = alt.createActions(ReplicatedDBActions);

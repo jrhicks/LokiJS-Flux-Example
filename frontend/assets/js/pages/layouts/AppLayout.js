@@ -1,26 +1,34 @@
 import React from 'react';
 import {Link, RouteHandler} from 'react-router';
 import db from '../../db/ReplicatedDB'
+import ReplicatedDBStore from '../../db/ReplicatedDBStore';
 import helper from '../../helper';
 
 var AppLayout = React.createClass({
   displayName: 'APP',
 
   getInitialState() {
-    return {subscriptions: []}
+    return {
+      syncStatus: 'stopped',
+      subscriptions: []
+      }
   },
 
-  // TODO FIX
-  componentDidMount() {
-    //ReplicatedDBStore.listen(this._onChange);
+  componentWillMount() {
+    db.addSubscription('project', {});
+    ReplicatedDBStore.listen(this._onChange);
   },
 
   componentWillUnmount() {
-    //ReplicatedDBStore.unlisten(this._onChange);
+    ReplicatedDBStore.unlisten(this._onChange);
   },
 
   _onChange() {
-    this.setState({subscriptions: db.subscription.data});
+    console.log("_onChange Happened :)")
+    this.setState({
+      syncStatus: ReplicatedDBStore.syncStatus,
+      subscriptions: db.subscription.data()
+    });
   },
 
   startReplication() {

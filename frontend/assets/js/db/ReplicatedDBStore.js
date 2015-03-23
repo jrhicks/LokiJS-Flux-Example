@@ -1,14 +1,15 @@
 import alt from '../alt';
-//import ReplicatedDBActions from './ReplicatedDBActions';
+import ReplicatedDBActions from './ReplicatedDBActions';
 
 class ReplicatedDBStore {
 
   constructor() {
-    //this.bindActions(ReplicatedDBActions);
+    this.replicationStatus = null;
+    this.bindActions(ReplicatedDBActions);
   }
 
-  onReportChanges(changes) {
-    // Alt notifies subscribed views for us.
+  onUpdate() {
+    console.log("ReplicatedDBStore Received Update :)")
   }
 
 }

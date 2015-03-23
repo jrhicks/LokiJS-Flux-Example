@@ -1,6 +1,7 @@
 import alt from '../alt';
 import Loki from 'lokijs';
 import objectHash from 'object-hash';
+import ReplicatedDBActions from './ReplicatedDBActions';
 
 class ReplicatedDB {
 
@@ -9,7 +10,7 @@ class ReplicatedDB {
     this.db = loki;
 
     // META COLLECTIONS
-    this.subscription = this.db.addCollection('__subscription', {indices:['id']});
+    this.subscription = this.db.addCollection('subscription', {indices:['id']});
 
     // APP COLLECTIONS
     this.project = this.db.addCollection('project', {indices:['id']});
@@ -21,18 +22,21 @@ class ReplicatedDB {
     this.pollingInterval = 5000;
   }
 
+  notifyChange() {
+    ReplicatedDBActions.update();
+  }
+
   async run() {
-    console.log("run start");
     if (this.isRunning) {
       throw 'Please only run once at the start of your application.'
     } else {
       this.isRunning = true;
       while (true) {
         if (this.shouldReplicate) {
-          console.log("this.shouldReplicate == true");
+          console.log(".");
           //await this.replicate();
         } else {
-          console.log("this.shouldReplicate == false");
+          console.log("#");
         }
         await this.milliseconds(this.pollingInterval);
       }
@@ -64,6 +68,7 @@ class ReplicatedDB {
       }
       this.subscription.insert(s);
     }
+    this.notifyChange();
   }
 
   startReplication() {
