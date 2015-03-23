@@ -13,12 +13,16 @@ var App = React.createClass({
   },
 
   componentDidMount() {
-    //ReplicatedDBStore.listen(this._onChange);
-    //ReplicatedDB.addSubscription('project', {});
+    db.project.on('insert', this._onChange);
+    db.project.on('update', this._onChange);
+    db.project.on('delete', this._onChange);
+    db.addSubscription('project', {});
   },
 
   componentWillUnmount() {
-    //ReplicatedDBStore.unlisten(this._onChange);
+    //db.project.remove('insert', this._onChange);
+    //db.project.remove('update', this._onChange);
+    //db.project.remove('delete', this._onChange);
   },
 
   _onChange() {

@@ -4,10 +4,10 @@ class ReplicatedDBController < ApplicationController
 
   def download_updates()
     scope = JSON.parse(params[:scope]).inject({}){|memo,(k,v)| memo[k.to_sym] = v; memo}
-    collection = scope[:collection]
+    collectionName = scope[:collectionName]
     filter = (scope[:filter] || {}).inject({}){|memo,(k,v)| memo[k.to_sym] = v; memo}
 
-    m = collection.camelize.constantize
+    m = collectionName.camelize.constantize
     if scope[:lastUpdatedCursor] && scope[:lastIdCursor]
       ci = scope[:lastIdCursor]
       cu = DateTime.parse(scope[:lastUpdatedCursor])
@@ -17,7 +17,7 @@ class ReplicatedDBController < ApplicationController
       data = m.where(filter).order("updated_at asc, id asc").limit(250)
       count = m.where(filter).order("updated_at asc, id asc").count
     end
-    render text: {availableUpdatesCount: count, data: data.as_json.to_json}
+    render text: {availableUpdatesCount: count, data: data.as_json}.to_json
   end
 
 end

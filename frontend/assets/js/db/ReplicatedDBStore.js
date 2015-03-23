@@ -4,12 +4,12 @@ import ReplicatedDBActions from './ReplicatedDBActions';
 class ReplicatedDBStore {
 
   constructor() {
-    this.replicationStatus = null;
+    this.lastUpdated = new Date().getTime();
     this.bindActions(ReplicatedDBActions);
   }
 
   onUpdate() {
-    console.log("ReplicatedDBStore Received Update :)")
+    this.lastUpdated = new Date().getTime();
   }
 
 }

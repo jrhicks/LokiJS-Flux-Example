@@ -15,7 +15,8 @@ var AppLayout = React.createClass({
   },
 
   componentWillMount() {
-    db.addSubscription('project', {});
+    db.subscription.on('insert', this._onChange);
+    db.subscription.on('update', this._onChange);
     ReplicatedDBStore.listen(this._onChange);
   },
 
@@ -24,10 +25,9 @@ var AppLayout = React.createClass({
   },
 
   _onChange() {
-    console.log("_onChange Happened :)")
     this.setState({
       syncStatus: ReplicatedDBStore.syncStatus,
-      subscriptions: db.subscription.data()
+      subscriptions: db.subscription.data
     });
   },
 
@@ -47,12 +47,15 @@ var AppLayout = React.createClass({
         <tr>
           <th>Collection</th>
           <th>Filter</th>
+          <th>recordsToDownload</th>
+          <th>lastIdCursor</th>
         </tr>
         {records.map((p)=>
           <tr key={p.id}>
-            <td>{p.collection}</td>
+            <td>{p.collectionName}</td>
             <td>{JSON.stringify(p.filter,null,2)}</td>
-            <td>{p.recordsDownloaded}</td>
+            <td>{p.recordsToDownload}</td>
+            <td>{p.lastIdCursor}</td>
           </tr>
         )}
       </table> )
@@ -62,6 +65,7 @@ var AppLayout = React.createClass({
   },
 
   render() {
+    console.log(this.state);
     return (
       <div>
         <h1>Example-Flux-App-With-Offline-Stores</h1>

@@ -15,14 +15,26 @@ var ProjectShow = React.createClass({
   },
 
   componentWillMount() {
-    let projectId = parseInt(this.getParams().projectId);
-    //ReplicatedDBStore.listen(this._onChange);
-    ReplicatedDB.addSubscription('note', {project_id: projectId});
-    ReplicatedDB.addSubscription('contact', {project_id: projectId});
+    let params = this.context.router.getCurrentParams()
+    let projectId = parseInt(params.projectId);
+
+    db.note.on('insert', this._onChange);
+    db.note.on('update', this._onChange);
+    db.note.on('delete', this._onChange);
+    db.contact.on('insert', this._onChange);
+    db.contact.on('update', this._onChange);
+    db.contact.on('delete', this._onChange);
+    db.addSubscription('note', {project_id: projectId});
+    db.addSubscription('contact', {project_id: projectId});
   },
 
   componentWillUnmount() {
-    //ReplicatedDBStore.unlisten(this._onChange);
+    db.note.remove('insert', this._onChange);
+    db.note.remove('update', this._onChange);
+    db.note.remove('delete', this._onChange);
+    db.contact.remove('insert', this._onChange);
+    db.contact.remove('update', this._onChange);
+    db.contact.remove('delete', this._onChange);
   },
 
   _onChange() {
