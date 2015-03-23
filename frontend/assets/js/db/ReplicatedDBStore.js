@@ -1,10 +1,10 @@
 import alt from '../alt';
-import ReplicatedDBActions from './db/ReplicatedDBActions';
+//import ReplicatedDBActions from './ReplicatedDBActions';
 
 class ReplicatedDBStore {
 
   constructor() {
-    this.bindActions(ReplicatedDBActions);
+    //this.bindActions(ReplicatedDBActions);
   }
 
   onReportChanges(changes) {
@@ -13,4 +13,4 @@ class ReplicatedDBStore {
 
 }
 
-module.exports = new ReplicatedDBStore();
+module.exports = alt.createStore(ReplicatedDBStore);

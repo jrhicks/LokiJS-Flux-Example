@@ -16,13 +16,13 @@ var ProjectShow = React.createClass({
 
   componentWillMount() {
     let projectId = parseInt(this.getParams().projectId);
-    ReplicatedDBStore.listen(this._onChange);
-    ReplicatedDB.addSubscription('note', {project_id: projectId} );
-    ReplicatedDB.addSubscription('contact', {project_id: projectId} );
+    //ReplicatedDBStore.listen(this._onChange);
+    ReplicatedDB.addSubscription('note', {project_id: projectId});
+    ReplicatedDB.addSubscription('contact', {project_id: projectId});
   },
 
   componentWillUnmount() {
-    ReplicatedDBStore.unlisten(this._onChange);
+    //ReplicatedDBStore.unlisten(this._onChange);
   },
 
   _onChange() {

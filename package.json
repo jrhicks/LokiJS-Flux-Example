@@ -6,15 +6,15 @@
     "webpack": "^1.5.3"
   },
   "dependencies": {
-    "alt": "^0.13.2",
+    "alt": "^0.14.4",
     "babel-core": "^4.7.12",
     "fs": "0.0.2",
     "jsx-loader": "^0.12.2",
     "object-assign": "^2.0.0",
     "object-hash": "^0.5.0",
     "object-values": "^1.0.0",
-    "react": "0.12.x",
-    "react-router": "^0.12.4",
+    "react": "^0.13.1",
+    "react-router": "^0.13.1",
     "superagent": "^0.21.0",
     "superagent-promise": "^0.2.0"
   }

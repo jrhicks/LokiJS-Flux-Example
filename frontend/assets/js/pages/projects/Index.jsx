@@ -3,7 +3,7 @@ import {Link} from 'react-router';
 import db from '../../db/ReplicatedDB';
 import helper from '../../helper';
 
-import ReplicatedDBStore from '../../db/ReplicatedDBStore';
+//import ReplicatedDBStore from '../../db/ReplicatedDBStore';
 
 var App = React.createClass({
   displayName: 'ProjectIndex',
@@ -13,12 +13,12 @@ var App = React.createClass({
   },
 
   componentDidMount() {
-    ReplicatedDBStore.listen(this._onChange);
-    ReplicatedDB.addSubscription('project', {});
+    //ReplicatedDBStore.listen(this._onChange);
+    //ReplicatedDB.addSubscription('project', {});
   },
 
   componentWillUnmount() {
-    ReplicatedDBStore.unlisten(this._onChange);
+    //ReplicatedDBStore.unlisten(this._onChange);
   },
 
   _onChange() {

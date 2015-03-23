@@ -1,3 +1,4 @@
+import alt from '../alt';
 import Loki from 'lokijs';
 import objectHash from 'object-hash';
 
@@ -5,15 +6,15 @@ class ReplicatedDB {
 
   constructor() {
     let loki = new Loki('ReplicatedDB');
-    this.loki = loki;
+    this.db = loki;
 
     // META COLLECTIONS
-    this.subscription = loki.addCollection('__subscription', {indices:['id']});
+    this.subscription = this.db.addCollection('__subscription', {indices:['id']});
 
     // APP COLLECTIONS
-    this.project = loki.addCollection('project', {indices:['id']});
-    this.note = loki.addCollection('note', {indices:['id']});
-    this.contact = loki.addCollection('contact', {indices:['id']});
+    this.project = this.db.addCollection('project', {indices:['id']});
+    this.note = this.db.addCollection('note', {indices:['id']});
+    this.contact = this.db.addCollection('contact', {indices:['id']});
 
     this.shouldReplicate = false;
     this.isRunning = false;
@@ -21,13 +22,17 @@ class ReplicatedDB {
   }
 
   async run() {
+    console.log("run start");
     if (this.isRunning) {
       throw 'Please only run once at the start of your application.'
     } else {
       this.isRunning = true;
       while (true) {
-        if (this.isRunning) {
-          await this.replicate();
+        if (this.shouldReplicate) {
+          console.log("this.shouldReplicate == true");
+          //await this.replicate();
+        } else {
+          console.log("this.shouldReplicate == false");
         }
         await this.milliseconds(this.pollingInterval);
       }
@@ -62,17 +67,19 @@ class ReplicatedDB {
   }
 
   startReplication() {
+    console.log("startReplication");
     this.shouldReplicate = true;
   }
 
   stopReplication() {
+    console.log("stopReplication");
     this.shouldReplicate = false;
   }
 
   // PRIVATE METHODS
 
   async replicate() {
-    let subscriptions = this.db.subscription.data;
+    let subscriptions = this.subscription.data;
 
     while (subscriptions.length > 0) {
       for (let s of db.subscription.data) {
@@ -120,7 +127,6 @@ class ReplicatedDB {
         subscription.save
       }
 
-      // TODO TRACK ELAPSED TIME
       if (subscription.recordsDownloaded % 10 == 0) {
         await this.milliseconds(10);
       }
@@ -141,4 +147,4 @@ class ReplicatedDB {
 
 }
 
-module.exports = alt.createStore(ReplicatedDBStore);
+module.exports = new ReplicatedDB();

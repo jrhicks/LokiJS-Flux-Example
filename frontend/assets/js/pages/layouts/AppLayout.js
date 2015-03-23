@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link, RouteHandler} from 'react-router';
-import db from '../../db/ReplicatedDB';
+import db from '../../db/ReplicatedDB'
 import helper from '../../helper';
 
 var AppLayout = React.createClass({
@@ -12,15 +12,23 @@ var AppLayout = React.createClass({
 
   // TODO FIX
   componentDidMount() {
-    ReplicatedDBStore.listen(this._onChange);
+    //ReplicatedDBStore.listen(this._onChange);
   },
 
   componentWillUnmount() {
-    ReplicatedDBStore.unlisten(this._onChange);
+    //ReplicatedDBStore.unlisten(this._onChange);
   },
 
   _onChange() {
     this.setState({subscriptions: db.subscription.data});
+  },
+
+  startReplication() {
+    db.startReplication();
+  },
+
+  stopReplication() {
+    db.stopReplication();
   },
 
   subscriptionsTable() {
@@ -49,8 +57,8 @@ var AppLayout = React.createClass({
     return (
       <div>
         <h1>Example-Flux-App-With-Offline-Stores</h1>
-        <button onClick={db.syncStart}>SYNC Start</button>
-        <button onClick={db.syncStop}>SYNC Stop</button>
+        <button onClick={this.startReplication}>SYNC Start</button>
+        <button onClick={this.stopReplication}>SYNC Stop</button>
         <hr />
         {this.subscriptionsTable()}
         <hr />
