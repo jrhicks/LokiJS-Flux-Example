@@ -3,16 +3,14 @@ import 'babel-core/polyfill';
 import React from 'react';
 window.React = React;
 
-import ReplicatedDBStore from './db/ReplicatedDBStore';
-window.ReplicatedDBStore = ReplicatedDBStore;
-
-import ReplicatedDBActions from './db/ReplicatedDBActions';
-window.ReplicatedDBActions = ReplicatedDBActions;
-
 import router from './router';
 window.router = router;
 
-import db from './db/ReplicatedDB'
-// Just run once :)
-db.run();
+import db from './db/db'
 window.db = db;
+
+import ReplicateActions from './actions/ReplicateActions';
+window.ReplicateActions = ReplicateActions;
+
+import replicate from './db/replicate';
+replicate.run();

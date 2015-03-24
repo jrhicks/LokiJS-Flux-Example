@@ -11,10 +11,10 @@ class ReplicatedDBController < ApplicationController
     if scope[:lastUpdatedCursor] && scope[:lastIdCursor]
       ci = scope[:lastIdCursor]
       cu = DateTime.parse(scope[:lastUpdatedCursor])
-      data = m.where(filter).where(["updated_at > ? or (updated_at=? and id>?)", cu, cu, ci]).order("updated_at asc, id asc").limit(250)
+      data = m.where(filter).where(["updated_at > ? or (updated_at=? and id>?)", cu, cu, ci]).order("updated_at asc, id asc").limit(1000)
       count = m.where(filter).where(["updated_at > ? or (updated_at=? and id>?)", cu, cu, ci]).count
     else
-      data = m.where(filter).order("updated_at asc, id asc").limit(250)
+      data = m.where(filter).order("updated_at asc, id asc").limit(1000)
       count = m.where(filter).order("updated_at asc, id asc").count
     end
     render text: {availableUpdatesCount: count, data: data.as_json}.to_json
