@@ -2,7 +2,7 @@ import React from 'react';
 import Router from 'react-router';
 var {Link} = Router;
 
-import ReplicateStore from '../../stores/ProjectStore';
+import ReplicateStore from '../../stores/ReplicateStore';
 import jsxHelper from '../../jsxHelper';
 
 //import ReplicatedDBStore from '../../db/ReplicatedDBStore';
