@@ -69,7 +69,6 @@ var AppLayout = React.createClass({
           <tr>
             <th style={cs}>Collection</th>
             <th style={cs}>Filter</th>
-            <th style={cs}>recordsToDownload</th>
             <th style={cs}>lastIdCursor</th>
             <th style={cs}>lastUpdatedCursor</th>
           </tr>
@@ -79,7 +78,6 @@ var AppLayout = React.createClass({
             <tr key={p.id}>
               <td style={cs}>{p.collectionName}</td>
               <td style={cs}>{JSON.stringify(p.filter,null,2)}</td>
-              <td style={cs}>{p.recordsToDownload}</td>
               <td style={cs}>{p.lastIdCursor}</td>
               <td style={cs}>{p.lastUpdatedCursor}</td>
             </tr>
@@ -109,8 +107,6 @@ var AppLayout = React.createClass({
         subscriptions: {this.state.subscriptions.length} <br />
         <h3>Subscriptions</h3>
         {this.subscriptionsTable(ts,cs)}
-        <h3>Load Queue</h3>
-        {this.queueTable(ts,cs)}
         <hr />
         <RouteHandler/>
       </div>

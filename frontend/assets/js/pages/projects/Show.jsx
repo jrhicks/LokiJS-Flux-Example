@@ -59,7 +59,7 @@ var ProjectShow = React.createClass({
   },
 
   render() {
-    let notes = this.state.notes;
+    let notes = this.state.notes.slice(0,50);
     let contacts = this.state.contacts;
 
     return <div>
