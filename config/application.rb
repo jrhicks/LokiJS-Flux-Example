@@ -25,6 +25,6 @@ module OpsRails
 
     # NEEDED FOR SYNC
     config.active_support.time_precision = 6
-
+    config.web_console.whitelisted_ips = '10.0.2.2'
   end
 end

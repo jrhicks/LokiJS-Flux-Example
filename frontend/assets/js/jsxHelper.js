@@ -1,4 +1,4 @@
-let helper = {
+let jsxHelper = {
   if(bool, v1, v2) {
     if (bool) {
       return v1;
@@ -13,4 +13,4 @@ let helper = {
 
 }
 
-module.exports = helper;
+module.exports = jsxHelper;

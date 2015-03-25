@@ -1,53 +1,59 @@
 import React from 'react';
-import {Link} from 'react-router';
-import db from '../../offline/LokiDB';
-import helper from '../../helper';
+import Router from 'react-router';
+var {Link} = Router;
 
-import OfflineStore from '../../offline/OfflineStore';
+import ReplicateStore from '../../stores/ProjectStore';
+import jsxHelper from '../../jsxHelper';
 
-var App = React.createClass({
+//import ReplicatedDBStore from '../../db/ReplicatedDBStore';
+
+var ProjectIndex = React.createClass({
   displayName: 'ProjectIndex',
 
   getInitialState() {
-    return {projects: []}
+    return {projects: db.project.data}
   },
 
   componentDidMount() {
-    OfflineStore.listen(this._onChange);
-    OfflineActions.subscribe('project', {});
+    ReplicateStore.listen(this._onChange);
   },
 
   componentWillUnmount() {
-    OfflineStore.unlisten(this._onChange);
+    ReplicateStore.unlisten(this._onChange);
   },
 
   _onChange() {
-    this.setState({projects: db.project.data});
   },
 
   render() {
+    console.log("Project Index Render");
+    console.log(this.state.projects);
     return (
         <div>
           <h2>Projects</h2>
-          {helper.if(this.state.projects.length > 0,
+          {jsxHelper.if(this.state.projects.length > 0,
             <table>
-              <tr>
-                <th>Project Name</th>
-                <th>City</th>
-                <th>State</th>
-                <th>Status</th>
-              </tr>
-              {this.state.projects.map( (project) =>
-                <tr key={project.id}>
-                  <td>
-                    <Link to="project" params={{projectId: project.id}}>
-                      {project.name}
-                    </Link>
-                  </td>
-                  <td>{project.city}</td>
-                  <td>{project.state}</td>
-                  <td>{project.status}</td>
-                </tr>)}
+              <thead>
+                <tr>
+                  <th>Project Name</th>
+                  <th>City</th>
+                  <th>State</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {this.state.projects.map( (project) =>
+                  <tr key={project.id}>
+                    <td>
+                      <Link to="project" params={{projectId: project.id}}>
+                        {project.name}
+                      </Link>
+                    </td>
+                    <td>{project.city}</td>
+                    <td>{project.state}</td>
+                    <td>{project.status}</td>
+                  </tr>)}
+              </tbody>
             </table>
           ,
           <p>No Projects</p>
@@ -58,8 +64,4 @@ var App = React.createClass({
 
 });
 
-module.exports = App;
-
-//        <div style={floatLeft}>
-//          <pre>{JSON.stringify(this.state.collections, null, 2)}</pre>
-//        </div>
+module.exports = ProjectIndex;

@@ -1,11 +1,10 @@
 import React from 'react';
 import Router from 'react-router';
-import OfflineStore from '../../offline/OfflineStore';
-import OfflineActions from '../../offline/OfflineActions'
-import db from '../../offline/LokiDB';
-import helper from '../../helper';
-
 var {Link} = Router;
+
+import db from '../../db/db';
+import jsxHelper from '../../jsxHelper';
+import ReplicateActions from '../../actions/ReplicateActions';
 
 var ProjectShow = React.createClass({
   displayName: 'ProjectShow',
@@ -13,41 +12,46 @@ var ProjectShow = React.createClass({
   mixins: [Router.Navigation, Router.State],
 
   getInitialState() {
-    return {contacts: [], notes: []}
+    return {contacts: db.contact.data,
+            notes: db.note.data}
   },
 
   componentWillMount() {
-    let projectId = parseInt(this.getParams().projectId);
-    OfflineStore.listen(this._onChange);
-    OfflineActions.subscribe('note', {project_id: projectId} );
-    OfflineActions.subscribe('contact', {project_id: projectId} );
+    let params = this.context.router.getCurrentParams()
+    let projectId = parseInt(params.projectId);
+    ReplicateActions.subscribe('contact', {project_id: projectId})
+    ReplicateActions.subscribe('note', {project_id: projectId})
   },
 
   componentWillUnmount() {
-    OfflineStore.unlisten(this._onChange);
   },
 
   _onChange() {
-    this.setState({
-      contacts: db.contact.data,
-      notes: db.note.data
-    });
+    this.setState(
+       {
+         contacts: db.contact.data,
+         notes: db.note.data
+       })
   },
 
   noteTable(notes, contacts) {
     if (notes.length > 0) {
       return <table>
-              <tr>
-                <th>ID</th>
-                <th>Contact</th>
-                <th>Message</th>
-              </tr>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Contact</th>
+                  <th>Message</th>
+                </tr>
+              </thead>
+              <tbody>
               {notes.map( (note) =>
                 <tr key={note.id}>
                   <td>{note.id}</td>
-                  <td></td>
+                  <td>{(db.contact.findOne({id:note.contact_id}) || {}).name}</td>
                   <td>{note.message}</td>
                 </tr>)}
+             </tbody>
              </table>;
     } else {
       return <p>No Notes</p>;
@@ -55,15 +59,13 @@ var ProjectShow = React.createClass({
   },
 
   render() {
-    let notes = this.state.notes;
+    let notes = this.state.notes.slice(0,50);
     let contacts = this.state.contacts;
 
-    return (
-      <div>
-        <h2>Project Show</h2>
-        {this.noteTable(notes, contacts)}
-      </div>
-    );
+    return <div>
+      <h2>Project Show</h2>
+      {this.noteTable(notes, contacts)}
+    </div>;
   }
 
 });

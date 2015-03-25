@@ -1,11 +1,16 @@
 import 'babel-core/polyfill';
 
 import React from 'react';
-import OfflineStore from './offline/OfflineStore';
-import OfflineActions from './offline/OfflineActions';
-import router from './router';
-
 window.React = React;
+
+import router from './router';
 window.router = router;
-window.OfflineStore = OfflineStore;
-window.OfflineActions = OfflineActions;
+
+import db from './db/db'
+window.db = db;
+
+import ReplicateActions from './actions/ReplicateActions';
+window.ReplicateActions = ReplicateActions;
+
+import replicate from './db/replicate';
+replicate.run();

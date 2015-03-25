@@ -9,3 +9,4 @@ node_modules/
 .idea
 .idea/
 app/assets/javascripts/rails.bundle.js
+npm-debug.log

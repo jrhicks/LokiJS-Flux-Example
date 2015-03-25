@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class OfflineStoreControllerTest < ActionController::TestCase
+class ReplicatedDBStoreControllerTest < ActionController::TestCase
   # test "the truth" do
   #   assert true
   # end
