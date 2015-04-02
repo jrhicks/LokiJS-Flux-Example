@@ -10,6 +10,10 @@ class ReplicateActions {
     this.dispatch();
   }
 
+  checkHyperActivity() {
+    this.dispatch();
+  }
+
   subscribe(collectionName, filter) {
     this.dispatch({collectionName, filter});
   }

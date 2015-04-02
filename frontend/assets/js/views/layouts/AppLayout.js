@@ -103,6 +103,7 @@ var AppLayout = React.createClass({
         <hr />
         <h2>Replicate Store</h2>
         shouldReplicate: {JSON.stringify(this.state.replicate.shouldReplicate)} <br />
+        hyperActivity: {JSON.stringify(this.state.replicate.hyperActivity)} <br />
         loadQueue: {this.state.replicate.loadQueue.length} <br />
         subscriptions: {this.state.subscriptions.length} <br />
         <h3>Subscriptions</h3>

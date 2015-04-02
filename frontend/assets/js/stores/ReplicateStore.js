@@ -11,9 +11,18 @@ class ReplicateStore {
     this.shouldReplicate = false;
     this.pollingInterval = 5000; // Milliseconds
     this.loadQueue = [];
+    this.hyperActivity = false;
+  }
+
+  onCheckHyperActivity() {
+    if (this.loadQueue.length==0)
+    {
+       this.hyperActivity = false;
+    }
   }
 
   onQueue(load) {
+    this.hyperActivity = true;
     this.loadQueue.push(load);
   }
 
@@ -70,10 +79,11 @@ class ReplicateStore {
   onStart() {
     console.log('ReplicateStore.onStart()');
     this.shouldReplicate = true;
+    this.hyperActivity = true;
   }
 
   onSubscribe({collectionName, filter}) {
-    console.log("ReplicateStore.subscribe");
+    this.hyperActivity = true;
     let id = objectHash({collectionName, filter});
     let s = db.subscription.findOne({id:id});
     if (s) {

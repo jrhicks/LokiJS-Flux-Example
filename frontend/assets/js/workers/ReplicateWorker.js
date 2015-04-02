@@ -13,10 +13,12 @@ class ReplicateWorker {
     // Private Variables
     this.countDown = 0;
     this.isRunning = false;
+    this.lastPolled = new Date().getTime();
 
     this.state = {
       shouldReplicate: false,
       pollingInterval: 5000,
+      hyperActivity: false,
       loadQueue: [],
     }
   }
@@ -26,15 +28,24 @@ class ReplicateWorker {
   }
 
   async run() {
-    let resolution = 1000; // Check for Sync Opportunities 5 times a second
+    let resolution = 20; // Check for Sync Opportunities 5 times a second
     if (this.isRunning) {
       throw 'Please only run once at the start of your application.'
     } else {
       this.isRunning = true;
+
       while (true) {
         this.state = ReplicateStore.getState();
         if (this.state.shouldReplicate) {
-          await this.createReplicateAction();
+          let timePassed = new Date().getTime() - this.lastPolled;
+          if ( this.state.hyperActivity || this.timePassed > this.state.pollingInterval)
+          {
+            console.log("1");
+            this.lastPolled = new Date().getTime();
+            await this.createReplicateAction();
+          } else {
+            console.log( timePassed > this.state.pollingInterval);
+          }
         }
         await this.milliseconds(resolution);
       }
@@ -46,6 +57,7 @@ class ReplicateWorker {
       await this.createQueueActions();
     } else {
       await this.createLoadAction();
+      ReplicateActions.checkHyperActivity();
     }
   }
 
