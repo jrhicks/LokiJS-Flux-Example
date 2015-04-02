@@ -26,7 +26,7 @@ class ReplicateWorker {
   }
 
   async run() {
-    let resolution = 20; // Check for Sync Opportunities 5 times a second
+    let resolution = 1000; // Check for Sync Opportunities 5 times a second
     if (this.isRunning) {
       throw 'Please only run once at the start of your application.'
     } else {
