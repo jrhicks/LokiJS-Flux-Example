@@ -40,6 +40,7 @@ var ProjectIndex = React.createClass({
                   <th>City</th>
                   <th>State</th>
                   <th>Status</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
@@ -53,6 +54,11 @@ var ProjectIndex = React.createClass({
                     <td>{project.city}</td>
                     <td>{project.state}</td>
                     <td>{project.status}</td>
+                    <td>
+                      <Link to="projectEdit" params={{projectId: project.id}}>
+                        edit
+                      </Link>
+                    </td>
                   </tr>)}
               </tbody>
             </table>
