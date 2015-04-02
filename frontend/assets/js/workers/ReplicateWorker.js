@@ -1,11 +1,11 @@
 import alt from '../alt';
-import db from './db';
+import db from '../models/Collections';
 import agent from 'superagent-promise';
 
 import ReplicateActions from '../actions/ReplicateActions';
 import ReplicateStore from '../stores/ReplicateStore';
 
-class Replicate {
+class ReplicateWorker {
 
   constructor() {
     ReplicateStore.listen(this.onReplicationChange);
@@ -92,4 +92,4 @@ class Replicate {
 
 }
 
-module.exports = new Replicate();
+module.exports = new ReplicateWorker();

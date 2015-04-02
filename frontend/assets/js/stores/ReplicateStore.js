@@ -1,5 +1,7 @@
 import alt from '../alt';
 import objectHash from 'object-hash';
+
+import db from '../models/Collections';
 import ReplicateActions from '../actions/ReplicateActions';
 
 class ReplicateStore {

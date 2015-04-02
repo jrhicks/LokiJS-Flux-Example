@@ -1,6 +1,6 @@
 import Loki from 'lokijs';
 
-class DB {
+class Collections {
 
   constructor() {
     let loki = new Loki('ReplicatedDB');
@@ -17,4 +17,4 @@ class DB {
 
 }
 
-module.exports = new DB();
+module.exports = new Collections();

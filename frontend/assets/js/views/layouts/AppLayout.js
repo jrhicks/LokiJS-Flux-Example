@@ -4,7 +4,7 @@ var {Link, RouteHandler} = Router;
 
 import ReplicateStore from '../../stores/ReplicateStore';
 import ReplicateActions from '../../actions/ReplicateActions';
-import db from '../../db/db';
+import db from '../../models/Collections';
 import jsxHelper from '../../jsxHelper';
 
 var AppLayout = React.createClass({

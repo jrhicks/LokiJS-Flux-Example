@@ -7,7 +7,9 @@
   },
   "dependencies": {
     "alt": "^0.14.4",
-    "babel-core": "^4.7.12",
+    "babel-core": "^4.7.16",
+    "babel-loader": "^4.3.0",
+    "babel-runtime": "^4.7.16",
     "fs": "0.0.2",
     "guid": "0.0.12",
     "jsx-loader": "^0.12.2",
@@ -16,8 +18,12 @@
     "object-hash": "^0.5.0",
     "object-values": "^1.0.0",
     "react": "^0.13.1",
-    "react-router": "^0.13.1",
+    "react-router": "^0.13.2",
     "superagent": "^0.21.0",
-    "superagent-promise": "^0.2.0"
+    "superagent-promise": "^0.2.0",
+    "tcomb": "^1.0.1",
+    "tcomb-form": "^0.4.5",
+    "tcomb-validation": "^1.0.2",
+    "webpack": "^1.7.3"
   }
 }

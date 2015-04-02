@@ -1,9 +1,9 @@
 'use strict';
 
 import React from 'react';
-import AppLayout from './pages/layouts/AppLayout';
-import ProjectsIndex from './pages/projects/Index';
-import ProjectsShow from './pages/projects/Show';
+import AppLayout from './views/layouts/AppLayout';
+import ProjectsIndex from './views/projects/Index';
+import ProjectsShow from './views/projects/Show';
 import { Route, DefaultRoute } from 'react-router';
 
 export default (

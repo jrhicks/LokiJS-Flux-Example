@@ -1,1 +1,25 @@
-foreman start
+Installing
+
+* git clone https://github.com/jrhicks/LokiJS-Flux-Example.git
+
+* cd LokiJS-Flux-Example
+
+* bundle install
+
+* rake db:setup
+
+* npm install
+
+* foreman start
+
+Front End Folder Structure (frontend/assets/js)
+
+* actions - These are flux actions
+
+* models - tcomb types and loki collections
+
+* stores - These are flux stores
+
+* views - These are flux views (React views)
+
+* workers - These (like views) listen to store changes, but instead of updating dom they alter their 'background' jobs.

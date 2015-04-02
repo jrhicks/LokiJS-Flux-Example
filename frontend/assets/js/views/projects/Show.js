@@ -2,7 +2,7 @@ import React from 'react';
 import Router from 'react-router';
 var {Link} = Router;
 
-import db from '../../db/db';
+import db from '../../models/Collections';
 import jsxHelper from '../../jsxHelper';
 import ReplicateActions from '../../actions/ReplicateActions';
 
