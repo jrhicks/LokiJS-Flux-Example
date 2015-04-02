@@ -16,11 +16,23 @@ var ProjectEdit = React.createClass({
   mixins: [Router.Navigation, Router.State],
 
   getInitialState() {
-    return {};
+    return {
+      project: {}
+    };
+  },
+
+  mountState() {
+    let params = this.context.router.getCurrentParams();
+    let projectId = parseInt(params.projectId);
+    let project = db.project.findOne({id: projectId});
+    return {project, x};
   },
 
   componentWillMount() {
-    let params = this.context.router.getCurrentParams()
+    console.log(this.mountState());
+    // Values Remain that of getInitialState?
+    this.setState(this.mountState());
+    console.log(this.state);
   },
 
   componentWillUnmount() {

@@ -14,8 +14,8 @@ let types = {
   projects: t.struct({
     name: t.Str,
     city: t.Str,
-    state: t.Str,
-    status: t.Str
+    state: enums.states,
+    status: t.enums.of('Completed Active Cancelled')
   }),
 
   notes: t.struct({
