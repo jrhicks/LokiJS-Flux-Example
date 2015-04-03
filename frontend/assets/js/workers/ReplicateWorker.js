@@ -53,11 +53,11 @@ class ReplicateWorker {
   }
 
   async createReplicateAction() {
+    ReplicateActions.checkHyperActivity();
     if (this.state.loadQueue.length == 0) {
       await this.createQueueActions();
     } else {
       await this.createLoadAction();
-      ReplicateActions.checkHyperActivity();
     }
   }
 
