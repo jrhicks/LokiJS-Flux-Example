@@ -1,34 +1,45 @@
 import React from 'react';
 import Router from 'react-router';
-var {Link} = Router;
 
 import db from '../../models/Collections';
 import ReplicateStore from '../../stores/ReplicateStore';
+import ReplicateActions from '../../actions/ReplicateActions';
 import jsxHelper from '../../jsxHelper';
 
-//import ReplicatedDBStore from '../../db/ReplicatedDBStore';
+let {Link} = Router;
 
 var ProjectIndex = React.createClass({
   displayName: 'ProjectIndex',
 
+  getState() {
+    if (this.isMounted() )
+    {
+      var projects = db.project.data;
+    } else {
+      var projects = [];
+    }
+
+    return {projects};
+  },
+
   getInitialState() {
-    return {projects: db.project.data}
+    return this.getState();
   },
 
   componentDidMount() {
-    ReplicateStore.listen(this._onChange);
+    ReplicateStore.listen(this.onStoreUpdate);
+    ReplicateActions.subscribe('project', {});
   },
 
   componentWillUnmount() {
-    ReplicateStore.unlisten(this._onChange);
+    ReplicateStore.unlisten(this.onStoreUpdate);
   },
 
-  _onChange() {
+  onStoreUpdate() {
+    this.setState(this.getState());
   },
 
   render() {
-    console.log("Project Index Render");
-    console.log(this.state.projects);
     return (
         <div>
           <h2>Projects</h2>

@@ -40,12 +40,9 @@ class ReplicateWorker {
           let timePassed = new Date().getTime() - this.lastPolled;
           if ( this.state.hyperActivity || this.timePassed > this.state.pollingInterval)
           {
-            console.log("1");
             this.lastPolled = new Date().getTime();
             await this.createReplicateAction();
-          } else {
-            console.log( timePassed > this.state.pollingInterval);
-          }
+          } 
         }
         await this.milliseconds(resolution);
       }

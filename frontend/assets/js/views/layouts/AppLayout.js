@@ -10,105 +10,40 @@ import jsxHelper from '../../jsxHelper';
 var AppLayout = React.createClass({
   displayName: 'APP',
 
-  getInitialState() {
-    return {
-      replicate: ReplicateStore.getState(),
-      subscriptions: db.subscription.data
-    }
+  getState() {
+    let replicate = ReplicateStore.getState();
+
+    return {replicate};
   },
 
-  componentWillMount() {
-    ReplicateStore.listen(this._onChange);
-    ReplicateActions.subscribe('project', {});
+  getInitialState() {
+    return this.getState();
+  },
+
+  componentDidMount() {
+    ReplicateStore.listen(this.onStoreUpdate);
   },
 
   componentWillUnmount() {
-    ReplicateStore.unlisten(this._onChange);
+    ReplicateStore.unlisten(this.onStoreUpdate);
   },
 
-  _onChange() {
-    this.setState({
-      replicate: ReplicateStore.getState(),
-      subscriptions: db.subscription.data
-    })
-  },
-
-  queueTable(ts, cs) {
-    let records = this.state.replicate.loadQueue;
-    if (records && records.length > 0) {
-      return (
-      <table style={ts}>
-        <thead>
-        <tr>
-          <th style={cs}>Collection</th>
-          <th style={cs}>Data</th>
-          <th style={cs}>CreatedAt</th>
-        </tr>
-        </thead>
-        <tbody>
-        {records.map((p)=>
-          <tr style={cs} key={p.id}>
-            <td style={cs}>{p.collectionName}</td>
-            <td style={cs} >{p.data.length}</td>
-            <td style={cs} >{p.createdAt}</td>
-          </tr>
-        )}
-      </tbody>
-      </table> )
-    } else {
-      return <span>Nothing in Queue</span>
-    }
-  },
-
-  subscriptionsTable(ts, cs) {
-    let records = this.state.subscriptions;
-    if (records && records.length > 0) {
-      return (
-      <table style={ts}>
-        <thead>
-          <tr>
-            <th style={cs}>Collection</th>
-            <th style={cs}>Filter</th>
-            <th style={cs}>lastIdCursor</th>
-            <th style={cs}>lastUpdatedCursor</th>
-          </tr>
-        </thead>
-        <tbody>
-          {records.map((p)=>
-            <tr key={p.id}>
-              <td style={cs}>{p.collectionName}</td>
-              <td style={cs}>{JSON.stringify(p.filter,null,2)}</td>
-              <td style={cs}>{p.lastIdCursor}</td>
-              <td style={cs}>{p.lastUpdatedCursor}</td>
-            </tr>
-          )}
-        </tbody>
-      </table> )
-    } else {
-      return <span>No subscriptions</span>
-    }
+  onStoreUpdate() {
+    this.setState(this.getState());
   },
 
   render() {
-    let ts = {borderCollapse: 'collapse'};
-    let cs = {border: '1px solid grey', padding: '5px'};
     return (
       <div>
         <h1>LokiJS Flux</h1>
+        <p>
+        <Link to="projects">Projects</Link> |
+        <Link to="replicate">Replicate</Link>
+        </p>
         {jsxHelper.if(this.state.replicate.shouldReplicate,
           <button onClick={ReplicateActions.stop}>SYNC Stop</button>,
           <button onClick={ReplicateActions.start}>SYNC Start</button>
          )}
-
-        <hr />
-        <h2>Replicate Store</h2>
-        shouldReplicate: {JSON.stringify(this.state.replicate.shouldReplicate)} <br />
-        hyperActivity: {JSON.stringify(this.state.replicate.hyperActivity)} <br />
-        loadQueue: {this.state.replicate.loadQueue.length} <br />
-        subscriptions: {this.state.subscriptions.length} <br />
-        <h3>Subscriptions</h3>
-        {this.subscriptionsTable(ts,cs)}
-        <hr />
         <RouteHandler/>
       </div>
     );

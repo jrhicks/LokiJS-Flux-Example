@@ -5,33 +5,62 @@ var {Link} = Router;
 import db from '../../models/Collections';
 import jsxHelper from '../../jsxHelper';
 import ReplicateActions from '../../actions/ReplicateActions';
+import ReplicateStore from '../../stores/ReplicateStore';
 
 var ProjectShow = React.createClass({
   displayName: 'ProjectShow',
 
   mixins: [Router.Navigation, Router.State],
 
-  getInitialState() {
-    return {contacts: db.contact.data,
-            notes: db.note.data}
+  getState() {
+    if (this.isMounted() )
+    {
+      let params = this.context.router.getCurrentParams();
+      let projectId = parseInt(params.projectId);
+      let project = db.project.findOne({id: projectId});
+
+      let notes = db.note.chain()
+                  .find({project_id: projectId})
+                  .simplesort('message')
+                  .limit(100)
+                  .data();
+
+      let contactsData = db.contact.chain()
+                  .find({project_id: projectId})
+                  .data();
+
+      let contacts = {};
+      for (let c of contactsData) {
+        contacts[c.id] = c;
+      }
+
+    } else {
+      let project = {};
+      let notes = [];
+      let contacts = {};
+    }
+    return {project, notes, contacts};
   },
 
-  componentWillMount() {
-    let params = this.context.router.getCurrentParams()
+  getInitialState() {
+    return this.getState();
+  },
+
+  componentDidMount() {
+    let params = this.context.router.getCurrentParams();
     let projectId = parseInt(params.projectId);
-    ReplicateActions.subscribe('contact', {project_id: projectId})
-    ReplicateActions.subscribe('note', {project_id: projectId})
+    ReplicateActions.subscribe('note', {project_id: projectId });
+    ReplicateActions.subscribe('contact', {project_id: projectId });
+    ReplicateStore.listen(this.onStoreUpdate);
+    this.setState(this.getState());
   },
 
   componentWillUnmount() {
+    ReplicateStore.unlisten(this._onChange);
   },
 
-  _onChange() {
-    this.setState(
-       {
-         contacts: db.contact.data,
-         notes: db.note.data
-       })
+  onStoreUpdate() {
+    this.setState(this.getState());
   },
 
   noteTable(notes, contacts) {
@@ -48,7 +77,7 @@ var ProjectShow = React.createClass({
               {notes.map( (note) =>
                 <tr key={note.id}>
                   <td>{note.id}</td>
-                  <td>{(db.contact.findOne({id:note.contact_id}) || {}).name}</td>
+                  <td>{(contacts[note.contact_id] || {}).name}</td>
                   <td>{note.message}</td>
                 </tr>)}
              </tbody>
@@ -59,8 +88,7 @@ var ProjectShow = React.createClass({
   },
 
   render() {
-    let notes = this.state.notes.slice(0,50);
-    let contacts = this.state.contacts;
+    let {notes, contacts} = this.state;
 
     return <div>
       <h2>Project Show</h2>
